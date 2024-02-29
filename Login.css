@@ -1,0 +1,61 @@
+body{
+background-image: url("./image.jps/jungellogin (2).jpg");
+
+}
+#placeholder {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.card {
+    width: 150px; /* גודל הכרטיסייה ברוחב */
+    height: 200px; /* גודל הכרטיסייה בגובה */
+    border: 1px solid #131212; /* גבול לכרטיסייה */
+    border-radius: 5px; /* עיגול פינות לכרטיסייה */
+    box-shadow: 0 4px 8px rgba(20, 19, 19, 0.881); /* אפשרות להוסיף צל לכרטיסייה */
+    margin: 10px; /* מרווח מסביב לכרטיסייה */
+    padding: 10px; /* מרווח בתוך הכרטיסייה */
+    background-color: #131212bd;
+
+}
+.card-img-top{
+    width: 80%;
+    margin-left: 15px;
+    
+}
+.Visitor-Button{
+    margin-left: 30px;
+}
+
+h1{
+    text-align: center;
+}
+p{
+    color: aliceblue;
+}
+#visitors-dialog{
+    position: fixed;
+    top: 30%;
+    left: 42%;
+}
+#query-input{
+width: 350px;
+height: 25px;
+margin-left: 90px;
+margin-top: 10px;
+}
+.go-to-zoo-Button {
+    width: 300px;
+    height: 40px;
+    position: fixed;
+    bottom: 20px; /* כאן תוכל לקבוע את המרחק מלמטה */
+    right: 20px; /* כאן תוכל לקבוע את המרחק מהצד הימני */
+    background-color: rgb(101, 240, 66);
+    border-radius: 8px;
+    box-shadow: #131212;
+}
+.go-to-zoo-Button:hover{
+   background-color: rgba(128, 128, 128, 0.867);
+}

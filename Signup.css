@@ -1,0 +1,36 @@
+body{
+    background-image: url("./image.jps/jungelsainup.jpg");
+    background-repeat: no-repeat; /* הגדרת אי החזרת רקע */
+    background-size: cover; /* אופציונלי: מתאים את התמונה לגודל החלון */
+}
+#create-visitor-form {
+    font-size: 18px; /* הגדלת גודל הגופן */
+    width: 80%; /* הגדלת רוחב הטופס */
+  }
+  
+  #create-visitor-form label {
+    font-size: 45px; /* הגדלת גודל התווים של התוויות */
+    text-align: center;
+   
+  }
+  
+  #create-visitor-form input[type="text"] {
+    font-size: 16px; /* הגדלת גודל התווים של שדות הטקסט */
+    height: 20px; /* הגדלת גובה שדה הטקסט */
+    padding: 10px; /* הוספת מרווח בין שדה הטקסט לגבולותיו */
+    margin-top: 10px;
+  }
+  
+  #create-visitor-form input[type="submit"] {
+    padding: 15px 30px; /* גודל הריווח מסביב לטקסט בלחצן */
+    font-size: 20px; /* גודל הגופן בלחצן */
+    width: 200px; /* רוחב הלחצן */
+    margin-left: 80px;
+  }
+  #name-and-submit{
+    margin-left: 50%;
+  }
+
+
+
+  

@@ -1,0 +1,43 @@
+body{
+    background-image: url("./image.jps/jungelzoo.jpg");
+    color: aliceblue;
+}
+.animals-card {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    width: 100%;
+  height: 150px; /* Adjust the height as needed */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.card-body {
+    padding: 10px; /* רווח פנימי ל-card */
+    text-align: left;
+}
+
+.card-text {
+    margin-bottom: 5px; 
+}
+
+#animal-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  #filter-controls {
+    margin: 20px 0;
+  }
+  
+  
+
+
+ 
+  
