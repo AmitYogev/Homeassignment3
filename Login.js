@@ -9,6 +9,7 @@ function createVisitorCard(visitor) {
   //set the html.
   visitorContainer.innerHTML = `
     <h3>${visitor.name}</h3>
+    <img src="image.jps/man.jpg" alt=${visitor.name}"/>
     <p>Coins: ${visitor.coins}</p>
     <button>Log In</button>
   `
