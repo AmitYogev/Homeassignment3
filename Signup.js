@@ -1,60 +1,68 @@
-//Signup
+let storageVisitors = getFromLocalStorage("visitors");
+
+function validName(name) {
+  for (let i = 0; i<name.length; i++) {
+    const charCode = name.charCodeAt(i);
+    //illegal string(a-z or space)
+    if(!((charCode >= 97 && charCode <=122) || (charCode >=65 && charCode <= 90) || charCode === 32)  ) {
+      return false;
+    }
+  }
+  //legal
+  return true;
+}
+
+function validateFormInputs(name) {
+  //if empty or illegal name
+  if (!name || !validName(name)) {
+    alert("Please enter a valid name");
+    return false;
+  }
+  return true;
+}
+
+function visitorExist(name) {
+  let flag = true;
+  storageVisitors.forEach((visitor) => {
+    //if a visitor with this name exist
+    if(visitor.name === name) {
+      alert("Visitor with this name already exists");
+      flag = false;
+    }
+  });
+  return flag;
+}
+
+function makeVisitor(name) {
+  //create visitor
+  const visitor = {
+    "name": name.trim(),
+    "coins": 50,
+  };
+
+  //update in local storage
+  const localVisitors = getFromLocalStorage('visitors');
+  localVisitors.push(visitor);
+  saveToLocalStorage("visitors", localVisitors);
+}
+  
+
 
 function createNewVisitor(event) {
-    // Prevent default form submission behavior
-    event.preventDefault();
-  
-    // Retrieve the value of the input field
-    const nameInput = document.getElementById("name");
-    const name = nameInput.value.trim();
+  event.preventDefault();
+  const name = document.getElementById("user-name").value;
+  if (validateFormInputs(name) && visitorExist(name)) {
+    makeVisitor(name);
+    //reset the text input bar.
+    document.getElementById("user-name").value = ""
+    
+    //move to login.html page.
+    window.location.href = "login.html";
+  }
+}
 
-    // Validate input
-    if (!name) {
-      alert("Please enter a name.");
-      return;
-    }
-  
-    // Check if the visitor already exists
-    if (visitorExists(name)) {
-      alert("Visitor already exists. Please choose a different name.");
-      return;
-    }
-  
-    // Create a new visitor object
-    const newVisitor = makeVisitor(name);
-  
-    // Update the visitors array
-    visitors.push(newVisitor);
-  
-    // Save updated visitor data to local storage
-    localStorage.setItem("visitors", JSON.stringify(visitors));
-   // Optionally, redirect to Login.html
-   window.location.href ="Login.html";
-    // Optionally, do something after creating the visitor, like redirecting or showing a success message
-    alert("Visitor created successfully!");
-  
-    // Clear the input field
-    nameInput.value = "";
-  }
-  
-  function visitorExists(name) {
-    // Check if a visitor with the given name already exists
-    return visitors.some(visitor => visitor.name === name);
-  }
-  
-  function makeVisitor(name) {
-    // Create a new visitor object with the given name and default properties
-    return {
-      name: name,
-      coins: 50 
-    }
-  }
-  
-  /**************************************
-    Add event listener for form submission
-    */
-  const createForm = document.getElementById("create-visitor-form");
-  if (createForm) {
-    createForm.addEventListener("submit", createNewVisitor);
-  }
-  
+const createForm = document.getElementById("create-visitor-form");
+if (createForm) {
+  createForm.addEventListener("submit", createNewVisitor);
+}
+

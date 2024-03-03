@@ -1,43 +1,61 @@
 body{
-    background-image: url("./image.jps/jungelzoo.jpg");
-    color: aliceblue;
+  background-image: url("./image.jps/zoojungel.jpg");
 }
-.animals-card {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 250px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 20px;
 }
-
-.card-img-top {
-    width: 100%;
-  height: 150px; /* Adjust the height as needed */
-  object-fit: cover;
+.animal {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 20px;
   border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid black;
+  width: 300px;
+  margin: 10px;
 }
 
-.card-body {
-    padding: 10px; /* רווח פנימי ל-card */
-    text-align: left;
+#filters-container {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
-.card-text {
-    margin-bottom: 5px; 
+#filters-container label {
+  margin-right: 10px;
+}
+
+#filters-container input[type="text"],
+#filters-container input[type="number"],
+#filters-container select {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-right: 10px;
 }
 
 #animal-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  #filter-controls {
-    margin: 20px 0;
-  }
-  
-  
-
-
- 
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+#nav-details{
+  background-color: rgba(255, 255, 255, 0.7);
+}
+h1{
+  font-size: 90px;
+  color: aliceblue;
+}
+img{
+  width: 200px;
+  height: 200px;
+  border-radius: 8%;
+}

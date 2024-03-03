@@ -9,11 +9,50 @@
     <script src="./main.js"></script>
   </head>
   <body>
-    <div id="search-container">
-        <label for="search-input">Search: </label>
-        <input type="text" id="search-input" placeholder="Search animals...">
+    <div class="flex-container" id="animal-title">
+      <h1><u>Welcome to the Zoo</u></h1>
     </div>
-    <div id="animal-cards"></div>
+    <div class="flex-container", id="nav-details">
+      <nav>
+        <h3 class="flex-container" id="visitor-name"></h3>
+        <h3 class="flex-container" id="visitor-coins"></h3>
+        <button class="flex-container" onclick=resetApp()>ResetApp</button>
+
+        <label class="flex-container" for="visitor-select">Visitors</label>
+        <select id="visitor-select">
+
+        </select>
+        <button id="dashboard-button">Go to dashboard</button>
+
+      </nav>
+    </div>
+    <div class="flex-container" id="filters-container">
+      <label for="name-filter"> Search Name:</label>
+      <input type="text" id="name-filter"/>
+      <label for="predator-filter">Is Predator:</label>
+      <select id="predator-filter">
+          <option value=""></option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+      </select>
+
+      <label for="habitat-filter">Habitat:</label>
+      <select id="habitat-filter">
+          <option value=""></option>
+      </select>
+
+      <label for="weight-filter">Weight greater than:</label>
+      <input type="number" id="weight-filter" />
+
+      <label for="height-filter">Height greater than:</label>
+      <input type="number" id="height-filter" />
+
+      <label for="color-filter">Color</label>
+      <select id="color-filter">
+          <option value=""></option>
+      </select>
+    </div>
+    <div class ="flex-container" id="animal-cards"></div>
     <script src="zoo.js"></script>
   </body>
 </html>

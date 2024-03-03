@@ -1,155 +1,125 @@
+let storageVisitors = getFromLocalStorage('visitors');
 
-  //Login
-  // _________________________________________________________________________
-  // const gotozooButton=()=>{
-//   const gotozooButton = document.createElement("button");
-//   gotozooButton.innerText = "Go To Zoo";
-//   gotozooButton.className = "go-to-zoo-Button";
-//   gotozooButton.addEventListener("click",window.location.href ="zoo.html")
-// }
-const gotozooButton = () => 
-{
-  const gotozooButtonElement = document.createElement("button");
-  gotozooButtonElement.innerText = "Go To Zoo";
-  gotozooButtonElement.className = "go-to-zoo-Button";
-  gotozooButtonElement.addEventListener("click", () => {
+//create the card in HTML for each visitor
+function createVisitorCard(visitor) {
+  //set the container.
+  const visitorContainer = document.createElement("div");
+  visitorContainer.classList.add("visitor")
+
+  //set the html.
+  visitorContainer.innerHTML = `
+    <h3>${visitor.name}</h3>
+    <p>Coins: ${visitor.coins}</p>
+    <button>Log In</button>
+  `
+  //adding event listener for the "Log In" button. (login and move to zoo.)
+  visitorContainer.addEventListener('click', function(event) {
+    event.preventDefault();
+    loginAsVisitor(visitor);
     window.location.href = "zoo.html";
   });
-  // הוסף את הכפתור לתוך ה- body של המסמך
-  document.body.appendChild(gotozooButtonElement);
+
+  //return the container.
+  return visitorContainer;
+}
+
+//creates the visitor dynamically
+function displayVisitors(visitors) {
+  const card = document.querySelector("#visitors-container");
+  //reset the HTML.
+  card.innerHTML = "";
+
+  //for each visitor - create a card.
+  visitors.forEach((visitor) => {
+    card.appendChild(createVisitorCard(visitor));
+  })
 }
 
 
-gotozooButton();
+//creating dialog if a user is connected.
+function createDialogBox() {
+  //create dialogBox
+  const dialogBox = document.createElement('div');
+  dialogBox.classList.add('dialog-box');
 
+  //create the message
+  const message = document.createElement('h3');
+  message.textContent = "A user already logged in. Do you want to log him out?";
 
-  let visitorsForView = [...visitors]; 
-  
+  //create button container
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add('dialog-buttons');
 
-  function logout() 
-  {
-    // מחקית המבקר הנוכחי מהלוקל סטוראג
-    localStorage.removeItem('currentVisitor');
-    console.log('Visitor logged out.');
+  //create yes button
+  const yesButton = document.createElement('button');
+  yesButton.classList.add('yes-button');
+  yesButton.textContent = 'Yes';
+
+  //create no button
+  const noButton = document.createElement('button');
+  noButton.classList.add('no-button');
+  noButton.textContent = 'No';
+
+  //create div to disable any other click on the screen.
+  const denyDiv = document.createElement('div');
+  denyDiv.classList.add('overlay');
+  document.body.appendChild(denyDiv)
+
+  //set parent
+  dialogBox.appendChild(message);
+  dialogBox.appendChild(buttonContainer);
+  buttonContainer.appendChild(yesButton);
+  buttonContainer.appendChild(noButton);
+  denyDiv.appendChild(dialogBox);
+
+  //adding events for buttons
+  yesButton.addEventListener('click',()=> {
+    logout();
+    closeDialog(denyDiv)
+  });
+  noButton.addEventListener('click',(event) => {
+    closeDialog(denyDiv);
+    window.location.href = "zoo.html";
+  });
 }
 
-  const dialog = document.querySelector("#visitors-dialog");
+function closeDialog(denyDiv) {
+  denyDiv.remove()
+}
 
-  const getvisitorsHTMLCard = (visitor) => {
-    const template = getVisitorTemplate(visitor);
-    const wrapper = document.createElement("div");
-    wrapper.className = "visitors-card";
-    wrapper.innerHTML = template;
-    wrapper.addEventListener("click", () => {handlevisitorClick(visitor)});
-    return wrapper;
-  };
 
-  const getCloseModalHTMLButton = () => {
-    const closeButton = document.createElement("button");
-    closeButton.innerText = "Close modal";
-    closeButton.addEventListener("click", () => dialog.close());
-    return closeButton;
-  };
+//login when click on "choose animals."
+function loginAsVisitor(visitor) {
+  const loggedVisitor = getLoggedVisitor()
+  if (!loggedVisitor) {
+    alert("Visitor " + visitor.name + " is logged in!");
+    saveToLocalStorage('loggedVisitor', visitor)
+  }
+}
 
-  const getVisitorTemplate = (visitor) => {
-    return `<div class="card"  >
-            <img class="card-img-top" src="./image.jps/man.jpg" alt="${visitor.name}"/>
-            <div class="card-body">
-              <p class="card-text">${visitor.name}</p>
-              <p class="card-text">${visitor.coins} $</p>
-            </div>
-          </div>`;
+function init() {
+  //getting the logged visitor from local storage if exist.
+  const loggedVisitor = getFromLocalStorage('loggedVisitor')
+
+  //if there is - pop the dialog.
+  if(loggedVisitor) {
+    createDialogBox();
   }
 
-  const handlevisitorClick = (visitor) => {
-    dialog.innerHTML = "";
-    const element = document.createElement("div");
-    element.innerHTML = getVisitorTemplate(visitor);
-    dialog.append(getCloseModalHTMLButton(), getSelectVisitorButton(visitor), getvisitorsHTMLCard(visitor));
-    dialog.showModal();
-};
-
-  
-  const getSearchBox = () => {
-    const queryInput = document.createElement("input");
-    queryInput.id = "query-input";
-    queryInput.placeholder = "Search visitors";
-    queryInput.className = "form-control my-4";
-    queryInput.oninput = (e) => {
-      visitorsForView =  visitors.filter((visitor) =>
-      visitor.name.includes(e.target.value)
-      );
-      rendervisitors();
-    };
-    return queryInput;
-  };
-  
-  const getEmptyCardsHTMLTemplate = () => {
-    const templateWrapper = document.createElement("div");
-    templateWrapper.className = "empty-result";
-  
-    const template = `
-      <h2>No visitors Found</h2>
-      <p>We're sorry, but no products match your search or filter criteria.</p>
-      <button id="clear-filter-btn" class="btn btn-dark">Clear search text</button>`;
-    templateWrapper.innerHTML = template;
-    templateWrapper.children["clear-filter-btn"].addEventListener("click",clearSearchBox);
-    return templateWrapper;
-  };
-  
-  const clearSearchBox = () => {
-    const input = document.getElementById("query-input");
-    input.value = "";
-    visitorsForView = [...  visitors];
-    rendervisitors();
-  };
-  
-  const rendervisitors = () => {
-    const visitorCards = visitorsForView.map(getvisitorsHTMLCard);
-    const visitorsPlaceholder = document.getElementById("placeholder");
-    visitorsPlaceholder.innerHTML = "";
-  
-    if (!visitorCards.length) {
-      visitorsPlaceholder.appendChild(getEmptyCardsHTMLTemplate());
-    }
-    visitorsPlaceholder.append(...visitorCards);
-  };
-  
-  document.body.insertAdjacentElement("afterbegin", getSearchBox());
-  window.addEventListener("load", rendervisitors);
-  //______________________________________________________________________________________________
-
-  
-  let title = document.createElement("h1");
-  title.id = "title_welcome";
-  document.body.insertAdjacentElement("afterbegin", title);
-  
-  // בדיקה אם קיים מבקר מחובר בעת טעינת העמוד
-  window.addEventListener("load", () => {
-      const currentVisitor = JSON.parse(localStorage.getItem('currentVisitor'));
-      if (currentVisitor) {
-          title.textContent = `Welcome to the Zoo, ${currentVisitor.name}!`;
-      }
+  // display the visitors as card.
+  displayVisitors(storageVisitors);
+  //adding event listener for an input change
+  const nameInput = document.getElementById('name-filter');
+  nameInput.addEventListener('input', (event) => {
+    //filter the visitor by given string(result in array)
+    filteredVisitors = storageVisitors.filter(visitor => {
+      const lowerCaseName = visitor.name.toLowerCase();
+      return lowerCaseName.startsWith(event.target.value.toLowerCase());
+    });
+    //display the visitors for filtered array.
+    displayVisitors(filteredVisitors);
   });
-  
-  const selectedVisitortothelocal = (visitorName) => {
-      const selectedVisitor = visitors.find(visitor => visitor.name === visitorName);
-      if (selectedVisitor) {
-          localStorage.setItem('currentVisitor', JSON.stringify(selectedVisitor));
-          alert(`Visitor ${selectedVisitor.name} logged in.`);
-          title.textContent = `Welcome to the Zoo, ${selectedVisitor.name}!`;
-      } else {
-          alert(`Visitor ${visitorName} not found.`);
-      }
-  };
-  
-  const getSelectVisitorButton = (visitor) => {
-      const selectVisitorButton = document.createElement("button");
-      selectVisitorButton.innerText = "Select visitor";
-      selectVisitorButton.className = "Visitor-Button";
-      selectVisitorButton.addEventListener("click", () => selectedVisitortothelocal(visitor.name));
-      return selectVisitorButton;
-  };
+}
 
-//____________________________________________________________________________________________________-
 
+init()
